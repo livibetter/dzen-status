@@ -1,0 +1,61 @@
+
+
+                                 dzen-status
+
+                       System status monitor with dzen2
+
+
+dzen-status is my person system status monitor, most likely, it will not work 
+for you, probably won't even run.
+
+
+                                 DEPENDENCIES
+
+
+- Linux
+- dzen2
+- alsa/asoundlib.h
+- /proc/stat
+- /proc/meminfo
+- /sys/class/net/ppp0/statistics/*
+- /sys/class/thermal/thermal_zone0/temp
+- /sys/class/power_supply/BAT0/*
+
+
+                                CONFIGURATION
+
+
+The dzen command should be in
+
+- $XDG_CONFIG_HOME/dzen-status/dzen or
+- $HOME/.config/dzen-status/dzen
+
+For example, all in first line,
+
+  dzen2 -bg '#000' -fg '#FFF' -fn Courier-12 -x 10 -y 10 -w 510 -h 20
+
+
+                                   HISTORY
+
+
+On 2010-12-04, dzen-status was born [1] (originally on Google Code), but it 
+was written in Bash, and soon ported to C [2] 16 days later. On 2011-08-13, it 
+was moved with the rest of dotfiles [3].
+
+[1] https://github.com/livibetter-backup/yjl/commit/aa33b5a
+[2] https://github.com/livibetter-backup/yjl/commit/ff8b6c5
+[3] https://github.com/livibetter/dotfiles/commits/master/dzen
+
+On the new year's day of 2016, UNLICENSE was applied to dzen-status, placing 
+it into public domain.
+
+In January, 2017, dzen-status has its own repository [1], with overhaul of the 
+entire code, stripping down many unnecessary parts.
+
+[1] https://github.com/livibetter/dzen-status
+
+
+                                  COPYRIGHT
+
+
+UNLICENSE has been applied to dzen-status.
