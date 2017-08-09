@@ -277,7 +277,6 @@ nodata:
 
   DSSPF("^fg(%s)%3ld^fg()K", used_color(tx_rate, 200, -1, -1), tx_rate);
   DSCAT("^fg(%s)%4ld", used_color(rx_rate, 500, -1, -1), rx_rate);
-  fprintf(stderr, "%zu: %s\n", strlen(dzen_str), dzen_str);
   return;
 err:
   DSCPY("^fg(#fff)^bg(f00)!!!K!!!!");
