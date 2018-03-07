@@ -257,18 +257,22 @@ update_net(int ID)
   ERRSCAN(f, 1, "%ld", &n_txb);
   fclose(f);
 
+  if (n_rxb < o_rxb || n_txb < o_txb)
+  {
+    DSCPY("^fg(#a00)???^fg()K^fg(#a00)????");
+    goto n2o;
+  }
+
   // rate in bytes
   rx_rate = 1000000 * (n_rxb - o_rxb) / update_funcs[ID].interval;
   tx_rate = 1000000 * (n_txb - o_txb) / update_funcs[ID].interval;
-  o_rxb = n_rxb;
-  o_txb = n_txb;
 
   if (nodata)
   {
     nodata = false;
 nodata:
     DSCPY("^fg(#a00)---^fg()K^fg(#a00)----");
-    return;
+    goto n2o;
   }
 
   // to Kbytes
@@ -277,6 +281,9 @@ nodata:
 
   DSSPF("^fg(%s)%3ld^fg()K", used_color(tx_rate, 200, -1, -1), tx_rate);
   DSCAT("^fg(%s)%4ld", used_color(rx_rate, 500, -1, -1), rx_rate);
+n2o:
+  o_rxb = n_rxb;
+  o_txb = n_txb;
   return;
 err:
   DSCPY("^fg(#fff)^bg(f00)!!!K!!!!");
