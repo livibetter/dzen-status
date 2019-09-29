@@ -158,6 +158,11 @@ update_cpu(int ID)
 
   int cpu_maxval, cpu_val, cpu_percentage;
   cpu_maxval = ncpu_total - ocpu_total;
+  if (cpu_maxval == 0)
+  {
+    // skip this round
+    return;
+  }
   cpu_val = cpu_maxval - (ncpu_idle - ocpu_idle);
   cpu_percentage = 100 * cpu_val / cpu_maxval;
 
