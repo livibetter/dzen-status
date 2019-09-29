@@ -22,6 +22,20 @@ for you, probably won't even run.
 - /sys/class/power_supply/BAT0/*
 
 
+                                   BUILDING
+
+
+Compile using
+
+  make
+
+It can take the following switches:
+
+  _NO_THERMAL=1
+  _NO_BATTERY=1
+  _NO_SOUND=1
+
+
                                 CONFIGURATION
 
 

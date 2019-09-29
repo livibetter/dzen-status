@@ -99,9 +99,15 @@ void update_cpu(int);
 void update_mem(int);
 void update_fs(int);
 void update_net(int);
+#ifdef _NO_THERMAL
 void update_thm(int);
+#endif
+#ifdef _NO_BATTERY
 void update_bat(int);
+#endif
+#ifdef _NO_SOUND
 void update_sound(int);
+#endif
 void update_clock(int);
 struct update_func update_funcs[] =
 {
@@ -109,9 +115,15 @@ struct update_func update_funcs[] =
   { 5000000, 31, &update_mem},
   {60000000, 21, &update_fs},
   { 5000000, 39, &update_net},
+#ifdef _NO_THERMAL
   {10000000, 25, &update_thm},
+#endif
+#ifdef _NO_BATTERY
   {  UI_BAT, 35, &update_bat},
+#endif
+#ifdef _NO_SOUND
   {  200000, 17, &update_sound},
+#endif
   { 1000000, 39, &update_clock}
 };
 const int UPDATE_FUNCS = sizeof(update_funcs) / sizeof(struct update_func);
@@ -294,6 +306,7 @@ err:
   DSCPY("^fg(#fff)^bg(f00)!!!K!!!!");
 }
 
+#ifdef _NO_THERMAL
 void
 update_thm(int ID)
 {
@@ -324,7 +337,9 @@ update_thm(int ID)
 err:
   DSCPY("^fg(#fff)^bg(#f00)!!C");
 }
+#endif
 
+#ifdef _NO_BATTERY
 #define SYSBAT0 "/sys/class/power_supply/BAT0"
 void
 update_bat(int ID)
@@ -379,7 +394,9 @@ update_bat(int ID)
 err:
   DSCPY("^fg(#fff)^bg(#f00)!!!%%");
 }
+#endif
 
+#ifdef _NO_SOUND
 void
 update_sound(int ID)
 {
@@ -425,6 +442,7 @@ update_sound(int ID)
   }
   DSCAT("%3d%%", percentage);
 }
+#endif
 
 void
 update_clock(int ID)
