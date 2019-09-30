@@ -198,6 +198,7 @@ void
 update_mem(int ID)
 {
   char *dzen_str = tmp_dzen[ID];
+  // All entries listed in kB
   FILE *f = fopen("/proc/meminfo", "r");
 
   int total, free, buffers, cached, used;
@@ -224,7 +225,7 @@ update_mem(int ID)
   {
     DSCPY("^bg(#fff)");
   }
-  char *color = used_color(used, 1024 * 1024, -1, 100 * 1024);
+  char *color = used_color(used, total, -1, 1024 * 1024);  // in kB
   DSCAT("^fg(%s)%4dM%3d%%", color, used / 1024, mem_percentage);
   return;
 err:
