@@ -99,7 +99,7 @@ void update_cpu(int);
 void update_mem(int);
 void update_fs(int);
 void update_net(int);
-#ifdef _NO_THERMAL
+#ifdef _THERMAL
 void update_thm(int);
 #endif
 #ifdef _NO_BATTERY
@@ -115,7 +115,7 @@ struct update_func update_funcs[] =
   { 5000000, 31, &update_mem},
   {60000000, 21, &update_fs},
   { 5000000, 39, &update_net},
-#ifdef _NO_THERMAL
+#ifdef _THERMAL
   {10000000, 25, &update_thm},
 #endif
 #ifdef _NO_BATTERY
@@ -307,25 +307,34 @@ err:
   DSCPY("^fg(#fff)^bg(f00)!!!K!!!!");
 }
 
-#ifdef _NO_THERMAL
+#ifdef _THERMAL
 void
 update_thm(int ID)
 {
   char *dzen_str = tmp_dzen[ID];
 
-  FILE *f;
-  int thm;
-  if ((f = fopen("/sys/class/thermal/thermal_zone0/temp", "r")))
-  {
-    ERRSCAN(f, 1, "%d", &thm);
-    thm /= 1000;
-  }
-  else
+  FILE *fp;
+  /* Open the command for reading. */
+  if (NULL == (fp = popen("/usr/bin/sensors -Au k10temp-pci-00c3", "r")))
   {
     DSCPY("^fg(#a00)--C");
     return;
   }
-  fclose(f);
+
+  int thm = 0;
+  char buf[1024];
+  /* Read the output a line at a time - output it. */
+  while (fgets(buf, sizeof(buf), fp) != NULL) {
+    if (1 == sscanf(buf, "%*s %d%*s", &thm))
+    {
+      break;
+    }
+  }
+  if (thm == 0)
+  {
+    DSCPY("^fg(#fff)^bg(#f00)!!C");
+    pclose(fp);
+  }
 
   *dzen_str = 0;
   if (thm >= CRITICAL_THM)
@@ -334,9 +343,7 @@ update_thm(int ID)
   }
 
   DSCAT("^fg(%s)%2dC", used_color(thm, 70, -1, 40), thm);
-  return;
-err:
-  DSCPY("^fg(#fff)^bg(#f00)!!C");
+  pclose(fp);
 }
 #endif
 
