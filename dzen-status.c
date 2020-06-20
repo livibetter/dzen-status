@@ -102,10 +102,10 @@ void update_net(int);
 #ifdef _THERMAL
 void update_thm(int);
 #endif
-#ifdef _NO_BATTERY
+#ifdef _BATTERY
 void update_bat(int);
 #endif
-#ifdef _NO_SOUND
+#ifdef _SOUND
 void update_sound(int);
 #endif
 void update_clock(int);
@@ -118,10 +118,10 @@ struct update_func update_funcs[] =
 #ifdef _THERMAL
   {10000000, 25, &update_thm},
 #endif
-#ifdef _NO_BATTERY
+#ifdef _BATTERY
   {  UI_BAT, 35, &update_bat},
 #endif
-#ifdef _NO_SOUND
+#ifdef _SOUND
   {  200000, 17, &update_sound},
 #endif
   { 1000000, 39, &update_clock}
@@ -347,7 +347,7 @@ update_thm(int ID)
 }
 #endif
 
-#ifdef _NO_BATTERY
+#ifdef _BATTERY
 #define SYSBAT0 "/sys/class/power_supply/BAT0"
 void
 update_bat(int ID)
@@ -404,7 +404,7 @@ err:
 }
 #endif
 
-#ifdef _NO_SOUND
+#ifdef _SOUND
 void
 update_sound(int ID)
 {
